@@ -1,0 +1,81 @@
+{% extends 'catalogue/base_user.html' %}
+{% load staticfiles %}
+{% block title %}{{ query_object.title }}{% endblock title %}
+{% block css %} <link rel="stylesheet" href="{% static 'css/item.css' %}"/>{% endblock css %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="wrapper">
+            <div class="container">
+                <div class="item-detail">
+                    <div class="row">
+                        <div class="col-lg-5 center">
+                            <img src="{{ query_object.cover.url }}" alt="image unavailable" style="width: 420px; height: 520px; margin: auto auto;" class="float-left">
+                        </div>
+                        <div class="col-lg-6 col-lg-offset-1">
+                            <h1>{{ query_object.title }}</h1>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <h5><small>Author:</small></h5>
+                                </div>
+                                <div class="col-xs-7">
+                                    <h5>{{ query_object.author }}</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <h5><small>Publisher:</small></h5>
+                                </div>
+                                <div class="col-xs-7">
+                                    <h5>{{ query_object.publisher }}</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <h5><small>Language:</small></h5>
+                                </div>
+                                <div class="col-xs-7">
+                                    <h5>{{ query_object.language }}</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <h5><small>Status:</small></h5>
+                                </div>
+                                <div class="col-xs-7">
+                                    <h5>{{ query_object.status }}</h5>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <h5><small>Copies Available:</small></h5>
+                                </div>
+                                <div class="col-xs-7">
+                                    <h5>{{ query_object.copies }}</h5>
+                                </div>
+                            </div>
+                            <h3>Summary:</h3>
+                            {{ query_object.summary }}
+                            <h3>Available Options:</h3>
+                            <form action="{% url 'rent_item' item_slug=query_object.slug %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_slug" value="{{ query_object.slug }}"/>
+                                <button type="submit" class="btn btn-primary">Rent</button>
+                            </form>
+                            <form action="{% url 'request_hold' item_slug=query_object.slug %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_slug" value="{{ query_object.slug }}"/>
+                                <button type="submit" class="btn btn-primary">Hold</button>
+                            </form>
+                            <form action="{% url 'reserve_item' item_slug=query_object.slug %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_slug" value="{{ query_object.slug }}"/>
+                                <button type="submit" class="btn btn-primary">Reserve</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

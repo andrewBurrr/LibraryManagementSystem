@@ -1,0 +1,45 @@
+{% extends 'catalogue/base_user.html' %}
+{% load staticfiles %}
+{% block title %}Borrowed Items{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/borrowed.css' %}">{% endblock css %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="container">
+            <table class="table-responsive table-striped">
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Format</th>
+                    <th>Due</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for item in query_list %}
+                    {% if item.renter == request.user %}
+                        <tr>
+                            <td><a href="{% url 'item' item_slug=item.item.slug %}">{{ item.item.title }}</a></td>
+                            <td>{{ item.item.author }}</td>
+                            <td>{{ item.item.format }}</td>
+                            <td>{{ item.due_date }}</td>
+                            <td>
+                                <form action="{% url 'return_item' item_id=item.id %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="item_id" value="{{ item.id }}"/>
+                                    <button type="submit" class="btn btn-primary btn-sm">Return</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="{% url 'renew_item' item_id=item.id %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="item_id" value="{{ item.id }}"/>
+                                    <button type="submit" class="btn btn-primary btn-sm">Renew</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock content %}

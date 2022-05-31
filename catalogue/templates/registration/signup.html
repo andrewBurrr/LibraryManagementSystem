@@ -1,0 +1,80 @@
+{% extends 'base_visitor.html' %}
+{% load staticfiles %}
+{% block title %}Sign Up{% endblock title %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/login.css' %}">{% endblock %}
+{% block content %}
+    <main class="text-center">
+        <div class="container align-center center">
+            <div class="col-lg-6 col-lg-offset-3">
+                <div class="panel panel-default ">
+                    <div class="panel-heading">Sign Up</div>
+                    <div class="panel-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {% if form.errors %}
+                                {% for error in form.username.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user">
+                                </i></span>
+                                <input id="id_username" type="text" class="form-control" name="username" placeholder="Username"/>
+                            </div>
+                            <br>
+                            {% if form.errors %}
+                                {% for error in form.email.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope">
+                                </i></span>
+                                <input id="id_email" type="email" class="form-control" name="email" placeholder="Email"/>
+                            </div>
+                            <br>
+                            {% if form.errors %}
+                                {% for error in form.password1.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock">
+                                </i></span>
+                                <input id="id_password1" type="password" class="form-control" name="password1" placeholder="Password"/>
+                            </div>
+                            <br>
+                            {% if form.errors %}
+                                {% for error in form.password2.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock">
+                                </i></span>
+                                <input id="id_password2" type="password" class="form-control" name="password2" placeholder="Password Confirmation"/>
+                            </div>
+                            <br>
+                            {% if form.errors %}
+                                {% for error in form.non_field_errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <input type="submit" class="btn btn-primary" value="Sign Up">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends 'base_visitor.html' %}
+{% load staticfiles %}
+{% block title %}{{ user.username }}{% endblock title %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/home.css' %}"/>{% endblock css %}
+
+{% block content %}
+    <div class="center">
+        <div class="jumbotron text-center">
+            <h1>MRU Library System</h1>
+            <p>This is the bestest and coolest library system ever</p>
+        </div>
+        <div class="text-center">
+            <p>This system is a product of the efforts of SENG 300 Group 11 (an Andrew Burton production), and has been designed to serve students and staff members of MRU.  If you are a user visiting this page, please see the login/registration pages to access the system.  This is a Jordan Labell approved message.</p>
+        </div>
+    </div>
+    <!--detail content for home page (welcome content discription photographs)-->
+{% endblock %}

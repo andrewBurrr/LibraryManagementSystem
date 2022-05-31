@@ -1,0 +1,10 @@
+body {
+    background-image: url("images/backGround.jpg");
+}
+
+.center {
+    margin: 12% auto;
+    width: 85%;
+    background: transparent;
+    padding: 10px;
+}

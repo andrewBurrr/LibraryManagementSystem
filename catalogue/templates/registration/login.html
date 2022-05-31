@@ -1,0 +1,55 @@
+{% extends 'base_visitor.html' %}
+{% load staticfiles %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/login.css' %}">{% endblock css %}
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+    <main class="text-center">
+        <div class="container align-center center">
+            <div class="col-lg-6 col-lg-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Login</div>
+                    <div class="panel-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            {% if form.errors %}
+                                {% for error in form.username.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user">
+                                </i></span>
+                                <input id="id_username" type="text" class="form-control" name="username" placeholder="Username"/>
+                            </div>
+                            <br>
+                            {% if form.errors %}
+                                {% for error in form.password.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock">
+                                </i></span>
+                                <input id="id_password" type="password" class="form-control" name="password" placeholder="Password"/>
+                            </div>
+                            <br>
+                            {% if form.errors %}
+                                {% for error in form.non_field_errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <input type="submit" class="btn btn-primary" value="Login">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content%}

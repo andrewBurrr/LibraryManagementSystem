@@ -1,0 +1,52 @@
+{% extends 'catalogue/base_user.html' %}
+{% load staticfiles%}
+{% block title %}Library{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/library.css' %}">{% endblock css %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row display-flex">
+            {% if items %}
+                {% for item in items %}
+                    <div class="col-sm-4 col-lg-2">
+                        <div class="thumbnail" style="width: 220px; height: 455px;">
+                            <!-- view item -->
+                            <a href="{% url 'item' item_slug=item.slug %}">
+                                <img src="{{ item.cover.url }}" class="img-responsive" alt="Image Unavailable" style="width: 210px; height: 260px;">
+                            </a>
+                            <div class="caption">
+                                <h4>{{ item.title }}</h4>
+                                <h5>{{ item.author }}<br><br><small>{{ item.format }}</small></h5>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix visible-lg"></div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="text-center">
+            {% if items.has_other_pages %}
+                <ul class="pagination">
+                    {% if items.has_previous %}
+                        <li><a href="?page={{ items.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in items.paginator.page_range %}
+                        {% if items.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if items.has_next %}
+                        <li><a href="?page={{ items.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

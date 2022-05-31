@@ -1,0 +1,36 @@
+{% extends 'catalogue/base_user.html' %}
+{% load staticfiles %}
+{% block title %}{{ user.username }}{% endblock title %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/item.css' %}">{% endblock css %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="container">
+            <p class="text-center" style="font-family:georgia,garamond,serif;font-size:24px;">Hello, {{ query_username }}</p>
+            <br>
+            <p class="text-center" style="font-family:Arial Unicode MS,garamond,serif;font-size:24px;">Available Options</p>
+            <p class="text-center"><a style="font-family:georgia,garamond,serif;font-size:20px" href="{% url 'borrowed' %}"><abbr title="Click to view borrowed items">Borrowed Books</abbr></a></p>
+            <p class="text-center"><a style="font-family:georgia,garamond,serif;font-size:20px" href="{% url 'holds' %}"><abbr title="Click to view pending holds">View Holds</abbr></a></p>
+            {% if query_user_group != "Student" %}
+            <p class="text-center"><a style="font-family:georgia,garamond,serif;font-size:20px" href="{% url 'reserves' %}"><abbr title="Click to view reserved items">View Reserves</abbr></a></p>
+            {% endif %}
+            <p class="text-center"><a style="font-family:georgia,garamond,serif;font-size:20px" href="{% url 'library' %}"><abbr title="Click to view library">View Library</abbr></a></p>
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+            <p class="text-center" style="font-family:Arial Unicode MS,garamond,serif;font-size:24px;">Account Status</p>
+            <p class="text-center" style="font-family:georgia,garamond,serif;font-size:16px;">Status: Valid </p>
+            {% if query_user_group %}
+                <p class="text-center" style="font-family:georgia,garamond,serif;font-size:16px;">User Type: {{ query_user_group }} </p>
+            {% else %}
+                <p class="text-center" style="font-family:georgia,garamond,serif;font-size:16px;">User Type: No Group Found </p>
+            {% endif %}
+            <p class="text-center" style="font-family:georgia,garamond,serif;font-size:16px;">Overdue Amount: ${{ query_user.amount_owed }}</p>
+            <br>
+            <br>
+        </div>
+    </div>
+
+{% endblock content %}
